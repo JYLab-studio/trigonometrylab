@@ -1,0 +1,1277 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>JYLab Trigonometry</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">/** @type {import('tailwindcss').Config} */
+globalThis.tailwind = globalThis.tailwind || {};
+globalThis.tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        'primary': '#38BDF8',
+        'on-primary': '#002B3D',
+        'primary-container': '#004C69',
+        'on-primary-container': '#C4E7FF',
+        'secondary': '#FF8D47',
+        'on-secondary': '#331200',
+        'secondary-container': '#773300',
+        'on-secondary-container': '#FFDBCA',
+        'tertiary': '#FFB960',
+        'on-tertiary': '#2A1700',
+        'success': '#4ADE80',
+        'on-success': '#052E16',
+        'error': '#FF897D',
+        'on-error': '#410002',
+        'surface': '#080E1D',
+        'surface-dim': '#050914',
+        'surface-container-lowest': '#050914',
+        'surface-container-low': '#0F172A',
+        'surface-container': '#151F38',
+        'surface-container-high': '#1E2945',
+        'surface-container-highest': '#293658',
+        'on-surface': '#E2E8F8',
+        'on-surface-variant': '#A8B5D1',
+        'outline': '#6E7D9E',
+        'outline-variant': '#263352',
+      },
+      borderRadius: {
+        'sm': '4px',
+        'DEFAULT': '8px',
+        'md': '12px',
+        'lg': '16px',
+        'xl': '24px',
+        'full': '9999px',
+      },
+      spacing: {
+        'gutter-xs': '4px',
+        'gutter-sm': '8px',
+        'gutter-md': '16px',
+        'gutter-lg': '24px',
+        'gutter-xl': '32px',
+        'section': '48px',
+        'page-margin': '20px',
+      },
+      fontFamily: {
+        'display': ['"Space Grotesk"', 'sans-serif'],
+        'headline': ['"Space Grotesk"', 'sans-serif'],
+        'title': ['"Space Grotesk"', 'sans-serif'],
+        'body': ['"Ubuntu"', 'sans-serif'],
+        'label': ['"Space Grotesk"', 'sans-serif'],
+        'mono': ['"Space Mono"', 'monospace'],
+      },
+      fontSize: {
+        'display-lg': ['40px', { lineHeight: '46px', letterSpacing: '-0.75px', fontWeight: '700' }],
+        'display-lg-mobile': ['28px', { lineHeight: '34px', letterSpacing: '-0.5px', fontWeight: '700' }],
+        'headline-lg': ['24px', { lineHeight: '30px', letterSpacing: '-0.25px', fontWeight: '700' }],
+        'headline-md': ['20px', { lineHeight: '26px', letterSpacing: '-0.15px', fontWeight: '600' }],
+        'title-md': ['16px', { lineHeight: '22px', letterSpacing: '0px', fontWeight: '600' }],
+        'body-lg': ['16px', { lineHeight: '24px', letterSpacing: '0px', fontWeight: '400' }],
+        'body-md': ['14px', { lineHeight: '21px', letterSpacing: '0px', fontWeight: '400' }],
+        'body-sm': ['12px', { lineHeight: '18px', letterSpacing: '0.1px', fontWeight: '400' }],
+        'label-lg': ['14px', { lineHeight: '20px', letterSpacing: '0.2px', fontWeight: '600' }],
+        'label-sm': ['12px', { lineHeight: '16px', letterSpacing: '0.4px', fontWeight: '500' }],
+        'mono-lg': ['16px', { lineHeight: '22px', letterSpacing: '0px', fontWeight: '700' }],
+        'mono-md': ['13px', { lineHeight: '19px', letterSpacing: '0px', fontWeight: '400' }],
+      },
+      transitionDuration: {
+        'state-change': '150ms',
+        'panel-enter': '320ms',
+        'orbital-pulse': '600ms',
+      },
+      transitionDelay: {
+        'state-change': '0ms',
+        'panel-enter': '0ms',
+        'orbital-pulse': '0ms',
+      },
+      transitionTimingFunction: {
+        'state-change': 'cubic-bezier(0.2, 0, 0, 1)',
+        'panel-enter': 'cubic-bezier(0.16, 1, 0.3, 1)',
+        'orbital-pulse': 'cubic-bezier(0.4, 0, 0.2, 1)',
+      },
+    },
+  },
+};
+if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
+</script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=Space+Mono:wght@400;700&amp;family=Ubuntu:wght@400;500;700&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet">
+  <style>
+    .material-symbols-outlined {
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      line-height: 1 !important;
+      box-sizing: content-box;
+      overflow: hidden;
+      white-space: nowrap;
+      direction: ltr;
+      vertical-align: middle;
+    }
+    :root {
+      --c-bg: #080E1D;
+      --c-stage: #050914;
+      --c-card: #0F172A;
+      --c-elevated: #151F38;
+      --c-border: #263352;
+      --c-text: #E2E8F8;
+      --c-muted: #A8B5D1;
+      --c-primary: #38BDF8;
+      --c-secondary: #FF8D47;
+      --c-tertiary: #FFB960;
+      --c-cos: #4ADE80;
+      --c-sin: #FF897D;
+      --c-tan: #C084FC;
+    }
+    html { scroll-behavior: smooth; }
+    .cosmic-grid {
+      background-image:
+        linear-gradient(to right, rgba(56, 189, 248, 0.055) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(56, 189, 248, 0.055) 1px, transparent 1px),
+        radial-gradient(rgba(168, 181, 209, 0.16) 1px, transparent 1px);
+      background-size: 56px 56px, 56px 56px, 28px 28px;
+      background-position: -1px -1px, -1px -1px, 0 0;
+    }
+    .cosmic-nebula {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .cosmic-nebula::before,
+    .cosmic-nebula::after {
+      content: "";
+      position: absolute;
+      inset: -35%;
+      will-change: transform, opacity;
+    }
+    .cosmic-nebula::before {
+      background:
+        radial-gradient(ellipse 48% 40% at 20% 22%, rgba(56, 189, 248, 0.2) 0%, rgba(21, 31, 56, 0.14) 45%, transparent 74%),
+        radial-gradient(ellipse 44% 38% at 80% 20%, rgba(255, 141, 71, 0.18) 0%, rgba(255, 185, 96, 0.06) 44%, transparent 72%),
+        radial-gradient(ellipse 54% 44% at 50% 80%, rgba(56, 189, 248, 0.14) 0%, rgba(15, 23, 42, 0.12) 50%, transparent 76%);
+      animation: nebulaDrift 24s ease-in-out infinite alternate;
+    }
+    .cosmic-nebula::after {
+      background:
+        radial-gradient(ellipse 40% 36% at 76% 74%, rgba(255, 141, 71, 0.16) 0%, rgba(255, 185, 96, 0.05) 45%, transparent 68%),
+        radial-gradient(ellipse 44% 38% at 24% 70%, rgba(56, 189, 248, 0.16) 0%, transparent 68%);
+      animation: nebulaCounterDrift 18s ease-in-out infinite alternate;
+    }
+    @keyframes nebulaDrift {
+      0% { transform: translate3d(-4%, -3%, 0) scale(1) rotate(0deg); opacity: 0.85; }
+      50% { transform: translate3d(4%, 3%, 0) scale(1.06) rotate(4deg); opacity: 1; }
+      100% { transform: translate3d(-2%, 5%, 0) scale(1.02) rotate(-3deg); opacity: 0.9; }
+    }
+    @keyframes nebulaCounterDrift {
+      0% { transform: translate3d(5%, 2%, 0) scale(1.04) rotate(0deg); opacity: 0.75; }
+      50% { transform: translate3d(-4%, -3%, 0) scale(0.98) rotate(-5deg); opacity: 1; }
+      100% { transform: translate3d(2%, -5%, 0) scale(1.05) rotate(3deg); opacity: 0.82; }
+    }
+    .stage-stars {
+      background-image:
+        radial-gradient(rgba(56, 189, 248, 0.22) 1px, transparent 1px),
+        radial-gradient(rgba(255, 141, 71, 0.16) 1px, transparent 1px);
+      background-size: 48px 48px, 73px 73px;
+      background-position: 0 0, 24px 18px;
+    }
+    @keyframes panelEnter {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes orbitRing {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    @keyframes pulseBeacon {
+      0%, 100% { transform: scale(1); opacity: 0.75; }
+      50% { transform: scale(1.45); opacity: 0.15; }
+    }
+    .animate-panel {
+      animation: panelEnter 380ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+    main section, main article {
+      position: relative;
+      box-shadow: 0 0 24px rgba(56, 189, 248, 0.08), inset 0 1px 0 rgba(56, 189, 248, 0.14);
+      transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 240ms ease, border-color 240ms ease, opacity 380ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    main section:hover {
+      border-color: rgba(56, 189, 248, 0.55);
+      box-shadow: 0 0 34px rgba(56, 189, 248, 0.16), 0 0 16px rgba(255, 141, 71, 0.08), inset 0 1px 0 rgba(56, 189, 248, 0.25);
+    }
+    main article:hover,
+    main .bg-surface-container:hover,
+    main .bg-surface-container-lowest:hover {
+      box-shadow: 0 0 22px rgba(56, 189, 248, 0.18), 0 0 10px rgba(255, 141, 71, 0.1);
+    }
+    main article:hover {
+      transform: translateY(-2px);
+    }
+    .sec-reveal {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    .sec-reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .orbit-ring-slow {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: orbitRing 36s linear infinite;
+    }
+    .beacon-ring {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: pulseBeacon 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .animate-panel, .orbit-ring-slow, .beacon-ring, .cosmic-nebula::before, .cosmic-nebula::after { animation: none !important; }
+      main section, main article { transition: none !important; }
+    }
+    svg { max-width: 100%; height: auto; touch-action: none; }
+    svg text { fill: var(--c-muted); font-family: "Space Mono", monospace; }
+    .ax { stroke: #334155; stroke-width: 1; }
+    .cc { fill: none; stroke: #475569; stroke-width: 1.6; }
+    .cs { stroke: var(--c-cos); stroke-width: 3; stroke-linecap: round; }
+    .ss { stroke: var(--c-sin); stroke-width: 3; stroke-linecap: round; }
+    .ds { stroke-dasharray: 4 3; stroke-width: 1.2; opacity: 0.65; }
+    #pl2 { paint-order: stroke; stroke: var(--c-stage); stroke-width: 4px; }
+    input[type="range"] {
+      accent-color: var(--c-primary);
+      cursor: pointer;
+    }
+    [hidden] { display: none !important; }
+    #intro-splash {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(56, 189, 248, 0.16), transparent 55%),
+        radial-gradient(circle at 72% 68%, rgba(255, 141, 71, 0.14), transparent 52%),
+        #050914;
+      transition: opacity 520ms cubic-bezier(0.16, 1, 0.3, 1), transform 520ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    #intro-splash.is-leaving {
+      opacity: 0;
+      transform: scale(1.03);
+      pointer-events: none;
+    }
+    @keyframes introBarFill {
+      from { transform: scaleX(0); }
+      to { transform: scaleX(1); }
+    }
+    @keyframes introOrbitFast {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(-360deg); }
+    }
+    .intro-bar-fill {
+      transform-origin: left center;
+      animation: introBarFill 1900ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    .intro-orbit-rev {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: introOrbitFast 12s linear infinite;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .intro-bar-fill, .intro-orbit-rev { animation: none !important; }
+      #intro-splash { transition: none !important; }
+    }
+    canvas {
+      width: 100%;
+      height: 340px;
+      display: block;
+      touch-action: none;
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface font-body antialiased min-h-[1024px] relative" data-stitch-vh="min-h-[1024px]===min-h-screen">
+  <div class="cosmic-nebula cosmic-grid" aria-hidden="true"></div>
+
+  <!-- Intro Observatory Splash -->
+  <div id="intro-splash" role="dialog" aria-label="JYLab Trigonometry intro" class="cosmic-grid px-page-margin">
+    <div class="flex flex-col items-center text-center gap-gutter-md max-w-md w-full animate-panel">
+      <div class="w-24 h-24 rounded-full bg-surface-container-low border border-outline-variant flex items-center justify-center shadow-[0_0_48px_rgba(56,189,248,0.22)]">
+        <svg viewBox="0 0 80 80" class="w-16 h-16" aria-hidden="true">
+          <circle cx="40" cy="40" r="32" fill="none" stroke="#38BDF8" stroke-width="1.5" stroke-dasharray="5 4" class="orbit-ring-slow"></circle>
+          <circle cx="40" cy="40" r="22" fill="none" stroke="#FF8D47" stroke-width="1.5" stroke-dasharray="3 4" class="intro-orbit-rev"></circle>
+          <circle cx="40" cy="40" r="8" fill="#FF8D47"></circle>
+          <circle cx="63" cy="24" r="4" fill="#38BDF8"></circle>
+          <circle cx="22" cy="54" r="3" fill="#FFB960"></circle>
+        </svg>
+      </div>
+      <div class="flex flex-col gap-1">
+        <span class="font-label text-label-sm uppercase tracking-widest text-primary">Orbital Math Observatory</span>
+        <h2 class="font-headline text-headline-lg text-on-surface tracking-tight">JYLab Trigonometry</h2>
+        <p class="font-body text-body-md text-on-surface-variant">Interactive unit circle, waveforms, solvers &amp; practice lab</p>
+      </div>
+      <div class="w-full max-w-[260px] flex flex-col gap-2">
+        <div class="h-1.5 w-full rounded-full bg-surface-container-high overflow-hidden border border-outline-variant">
+          <div class="intro-bar-fill h-full w-full rounded-full bg-gradient-to-r from-primary via-secondary to-tertiary"></div>
+        </div>
+        <span class="font-mono text-mono-md text-on-surface-variant">Calibrating orbital coordinate grid…</span>
+      </div>
+      <button id="skip-intro" type="button" class="px-4 py-1.5 rounded-full bg-surface-container-high border border-outline-variant text-on-surface font-label text-label-lg hover:border-primary hover:text-primary transition-colors duration-state-change focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+        Enter Lab
+      </button>
+    </div>
+  </div>
+
+  <div class="relative z-10 min-h-[1024px] flex flex-col" data-stitch-vh="min-h-[1024px]===min-h-screen">
+    <!-- Top Observatory Header & Navigation -->
+    <header class="sticky top-0 z-30 bg-surface-container-low border-b border-outline-variant">
+      <div class="max-w-[1200px] mx-auto px-page-margin py-3 flex flex-wrap items-center justify-between gap-gutter-md">
+        <div class="flex items-center gap-gutter-sm">
+          <div class="w-9 h-9 rounded-md bg-surface-container-high border border-outline-variant flex items-center justify-center">
+            <svg viewBox="0 0 36 36" class="w-7 h-7" aria-hidden="true">
+              <circle cx="18" cy="18" r="12" fill="none" stroke="#38BDF8" stroke-width="1.5" stroke-dasharray="3 2" class="orbit-ring-slow"></circle>
+              <circle cx="18" cy="18" r="5" fill="#FF8D47"></circle>
+              <circle cx="28" cy="12" r="2.5" fill="#38BDF8"></circle>
+            </svg>
+          </div>
+          <div class="flex flex-col">
+            <span data-design-text-token="title-md" class="font-headline text-title-md text-on-surface tracking-tight">JYLab Trigonometry</span>
+            <span data-design-text-token="label-sm" class="font-label text-label-sm text-primary">In development Beta v1.0</span>
+          </div>
+        </div>
+
+        <!-- COMPONENT: tabs-with-icon -->
+        <nav aria-label="Primary lab workspaces" data-component-id="tabs-with-icon" data-component-type="tabs" data-component-variant="with-icon">
+          <div role="tablist" class="inline-flex flex-wrap items-center gap-gutter-xs p-gutter-xs rounded-md bg-surface-container border border-outline-variant">
+            <button role="tab" type="button" data-g="learn" aria-selected="true" class="tb inline-flex items-center gap-gutter-xs px-3 py-1.5 rounded font-label text-label-lg transition-colors duration-state-change ease-state-change bg-primary text-on-primary">
+              <span class="material-symbols-outlined text-title-md" aria-hidden="true">orbit</span>
+              <span data-design-text-token="label-lg">Learn</span>
+            </button>
+            <button role="tab" type="button" data-g="explore" aria-selected="false" class="tb inline-flex items-center gap-gutter-xs px-3 py-1.5 rounded font-label text-label-lg transition-colors duration-state-change ease-state-change text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high">
+              <span class="material-symbols-outlined text-title-md" aria-hidden="true">show_chart</span>
+              <span data-design-text-token="label-lg">Explore</span>
+            </button>
+            <button role="tab" type="button" data-g="tools" aria-selected="false" class="tb inline-flex items-center gap-gutter-xs px-3 py-1.5 rounded font-label text-label-lg transition-colors duration-state-change ease-state-change text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high">
+              <span class="material-symbols-outlined text-title-md" aria-hidden="true">calculate</span>
+              <span data-design-text-token="label-lg">Tools</span>
+            </button>
+            <button role="tab" type="button" data-g="practice" aria-selected="false" class="tb inline-flex items-center gap-gutter-xs px-3 py-1.5 rounded font-label text-label-lg transition-colors duration-state-change ease-state-change text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high">
+              <span class="material-symbols-outlined text-title-md" aria-hidden="true">quiz</span>
+              <span data-design-text-token="label-lg">Practice</span>
+            </button>
+          </div>
+        </nav>
+
+        <div class="hidden md:flex items-center gap-gutter-sm px-3 py-1.5 rounded-full bg-surface-container border border-outline-variant">
+          <span class="w-2 h-2 rounded-full bg-secondary"></span>
+          <span id="nav-angle-pill" data-design-text-token="mono-md" class="font-mono text-mono-md text-on-surface tabular-nums">θ = 45.0° · π/4</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="flex-1 w-full max-w-[1200px] mx-auto px-page-margin py-gutter-lg flex flex-col gap-gutter-lg">
+      <!-- Active Workspace Sub-navigation -->
+      <div id="workspace-bar" class="flex flex-wrap items-center justify-between gap-gutter-sm px-4 py-2.5 rounded-md bg-surface-container-low border border-outline-variant">
+        <div class="flex items-center gap-gutter-sm">
+          <span id="ws-badge" class="px-2.5 py-0.5 rounded-full bg-primary-container text-on-primary-container font-label text-label-sm">Learn</span>
+          <span id="ws-desc" class="font-body text-body-sm text-on-surface-variant">Unit circle, special angles, unit converter, and equation solver</span>
+        </div>
+        <div id="ws-jumps" class="flex flex-wrap items-center gap-gutter-xs"></div>
+      </div>
+
+      <!-- LEARN: Unit Circle -->
+      <section id="circle" data-component-id="card-elevated" data-component-type="card" data-component-variant="elevated" class="bg-surface-container-low border border-outline-variant rounded-lg p-gutter-lg flex flex-col gap-gutter-md">
+        <header class="flex flex-wrap items-start justify-between gap-gutter-md">
+          <div class="flex flex-col gap-gutter-xs">
+            <div class="flex items-center gap-gutter-sm">
+              <h1 data-design-text-token="headline-lg" class="font-headline text-headline-lg text-on-surface">The unit circle</h1>
+              <span id="anim-badge" data-design-text-token="label-sm" class="px-2.5 py-0.5 rounded-full bg-primary-container text-on-primary-container font-label text-label-sm">Live Orbit</span>
+            </div>
+            <p data-design-text-token="body-md" class="font-body text-body-md text-on-surface-variant text-pretty">
+              Drag the orbital point or press Play to watch how <span class="text-success font-mono">cos θ</span> (x), <span class="text-error font-mono">sin θ</span> (y), and <span class="text-primary font-mono">tan θ</span> evolve around the circle.
+            </p>
+          </div>
+          <div class="flex flex-wrap items-center gap-gutter-sm text-body-sm font-body text-on-surface-variant">
+            <span class="inline-flex items-center gap-1.5"><span class="w-3 h-1 rounded-full bg-success"></span>cos θ (x)</span>
+            <span class="inline-flex items-center gap-1.5"><span class="w-3 h-1 rounded-full bg-error"></span>sin θ (y)</span>
+            <span class="inline-flex items-center gap-1.5"><span class="w-3 h-1 rounded-full bg-primary"></span>radius</span>
+            <span class="inline-flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-secondary"></span>roots</span>
+          </div>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter-lg items-start">
+          <!-- Left: Interactive SVG Stage + Live Wave Strip -->
+          <div class="lg:col-span-6 flex flex-col gap-gutter-md">
+            <div class="bg-surface-container-lowest border border-outline-variant rounded-md p-gutter-md stage-stars">
+              <svg id="uc" viewBox="-170 -170 340 340" font-size="6.8" aria-label="Interactive unit circle"></svg>
+            </div>
+            <!-- Live synchronized wave projection strip -->
+            <div class="bg-surface-container-lowest border border-outline-variant rounded-md p-gutter-sm flex flex-col gap-gutter-xs">
+              <div class="flex flex-wrap items-center justify-between gap-gutter-xs">
+                <span data-design-text-token="label-sm" class="font-label text-label-sm text-on-surface-variant">Live wave</span>
+                <span data-design-text-token="mono-md" class="font-mono text-mono-md text-primary tabular-nums" id="wave-readout">sin θ = 0.707 · cos θ = 0.707</span>
+              </div>
+              <svg id="mini-wave" viewBox="0 0 360 72" class="w-full h-16" aria-label="Live sine and cosine wave trace">
+                <line x1="0" y1="36" x2="360" y2="36" stroke="#263352" stroke-width="1"></line>
+                <path id="mw-cos" fill="none" stroke="#4ADE80" stroke-width="1.75" opacity="0.8"></path>
+                <path id="mw-sin" fill="none" stroke="#FF897D" stroke-width="2"></path>
+                <line id="mw-cursor" x1="45" y1="4" x2="45" y2="68" stroke="#38BDF8" stroke-width="1.2" stroke-dasharray="3 2"></line>
+                <circle id="mw-dot-cos" cx="45" cy="18" r="3.5" fill="#4ADE80"></circle>
+                <circle id="mw-dot-sin" cx="45" cy="18" r="4" fill="#FF897D"></circle>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Right: Controls & Readouts -->
+          <div class="lg:col-span-6 flex flex-col gap-gutter-md">
+            <!-- Input & Mode Row -->
+            <div class="bg-surface-container border border-outline-variant rounded-md p-gutter-md flex flex-col gap-gutter-sm">
+              <div class="flex flex-wrap items-center gap-gutter-sm">
+                <label for="ai" class="sr-only">Angle input</label>
+                <input id="ai" type="text" size="9" class="bg-surface-container-lowest text-on-surface font-mono text-mono-md border border-outline-variant rounded px-3 py-1.5 focus:border-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary tabular-nums">
+                <button id="ut" type="button" class="px-3 py-1.5 rounded bg-surface-container-high text-on-surface border border-outline-variant font-label text-label-sm hover:border-primary transition-colors duration-state-change">degrees</button>
+                <button id="dc" type="button" class="px-3 py-1.5 rounded bg-surface-container-high text-on-surface border border-outline-variant font-label text-label-sm hover:border-primary transition-colors duration-state-change">integers</button>
+                <button id="dr" type="button" class="px-3 py-1.5 rounded bg-surface-container-high text-on-surface border border-outline-variant font-label text-label-sm hover:border-primary transition-colors duration-state-change">⟲ counter-clockwise</button>
+              </div>
+
+              <input id="sl" type="range" min="0" max="360" step="1" class="w-full" aria-label="Angle slider">
+
+              <!-- Playback & Step Controls -->
+              <div class="flex flex-wrap items-center justify-between gap-gutter-sm pt-gutter-xs">
+                <div class="flex flex-wrap items-center gap-gutter-sm">
+                  <button id="pl" data-component-id="button-with-icon" data-component-type="button" data-component-variant="with-icon" type="button" class="inline-flex items-center gap-gutter-xs px-3.5 py-1.5 rounded bg-primary text-on-primary font-label text-label-lg transition-transform duration-state-change active:scale-95">
+                    <span class="material-symbols-outlined text-title-md" aria-hidden="true">pause</span>
+                    <span data-design-text-token="label-lg">Pause</span>
+                  </button>
+                  <button id="rv" data-component-id="button-secondary" data-component-type="button" data-component-variant="secondary" type="button" class="px-3 py-1.5 rounded bg-surface-container-high text-on-surface border border-outline-variant font-label text-label-sm hover:border-secondary hover:text-secondary transition-colors duration-state-change">One revolution</button>
+                  <button id="rs" type="button" class="px-3 py-1.5 rounded bg-surface-container-high text-on-surface border border-outline-variant font-label text-label-sm hover:border-primary transition-colors duration-state-change">Reset 0°</button>
+                </div>
+
+                <div class="flex items-center gap-gutter-xs">
+                  <button id="sb" type="button" aria-label="Step angle backward" class="w-8 h-8 inline-flex items-center justify-center rounded bg-surface-container-high text-on-surface border border-outline-variant hover:border-primary">◀</button>
+                  <select id="ss" aria-label="Angle step size" class="bg-surface-container-lowest text-on-surface font-mono text-mono-md border border-outline-variant rounded px-2 py-1 focus:border-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+                    <option>1</option>
+                    <option selected>15</option>
+                    <option>30</option>
+                    <option>45</option>
+                    <option>90</option>
+                  </select>
+                  <span class="text-on-surface-variant font-mono text-mono-md">°</span>
+                  <button id="sf" type="button" aria-label="Step angle forward" class="w-8 h-8 inline-flex items-center justify-center rounded bg-surface-container-high text-on-surface border border-outline-variant hover:border-primary">▶</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Live Trig Readout Table -->
+            <div class="bg-surface-container border border-outline-variant rounded-md overflow-x-auto">
+              <table id="ro" class="w-full text-left border-collapse"></table>
+            </div>
+
+            <!-- Quadrant & Reference Info -->
+            <div class="bg-surface-container-high border border-outline-variant rounded-md px-gutter-md py-3">
+              <p id="ri" data-design-text-token="body-md" class="font-body text-body-md text-on-surface tabular-nums"></p>
+            </div>
+          </div>
+        </div>
+
+        <details class="border-t border-outline-variant pt-3 text-body-md text-on-surface-variant">
+          <summary class="cursor-pointer font-label text-label-lg text-primary hover:underline">Why is tan undefined at 90° and 270°?</summary>
+          <p class="mt-2 leading-relaxed text-balance">At those angles the point is (0, ±1), so cos θ = 0. Since tan θ = sin θ / cos θ (the slope of the radius), you would divide by zero: the radius is vertical and has no finite slope. Likewise csc and cot are undefined at 0° and 180° where sin θ = 0.</p>
+        </details>
+      </section>
+
+      <!-- LEARN: Special angles & exact values -->
+      <section id="special" class="bg-surface-container-low border border-outline-variant rounded-lg p-gutter-lg flex flex-col gap-gutter-md">
+        <header class="flex flex-col gap-gutter-xs">
+          <h2 data-design-text-token="headline-lg" class="font-headline text-headline-lg text-on-surface">Special angles &amp; exact values</h2>
+          <p data-design-text-token="body-md" class="font-body text-body-md text-on-surface-variant">Click any row to smoothly rotate the unit circle to that angle.</p>
+        </header>
+
+        <div class="overflow-x-auto bg-surface-container border border-outline-variant rounded-md">
+          <table id="sat" class="w-full text-left border-collapse"></table>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-gutter-md items-stretch">
+          <article class="h-full bg-surface-container border border-outline-variant rounded-md p-gutter-md flex flex-col justify-between gap-gutter-md hover:border-primary transition-colors duration-state-change">
+            <div class="flex items-center justify-between gap-gutter-sm">
+              <span class="px-2.5 py-0.5 rounded-full bg-primary-container text-on-primary-container font-label text-label-sm">45°–45°–90°</span>
+              <button type="button" onclick="stop();setAngle(45);document.getElementById(&#39;circle&#39;).scrollIntoView()" class="px-2.5 py-1 rounded bg-surface-container-high text-primary border border-outline-variant font-label text-label-sm hover:border-primary transition-colors duration-state-change">Show 45°</button>
+            </div>
+
+            <div class="bg-surface-container-lowest border border-outline-variant rounded p-gutter-sm flex items-center justify-center">
+              <svg class="w-56 h-40" viewBox="0 0 190 155" font-size="10" aria-label="45-45-90 special right triangle">
+                <polygon points="40,126 140,126 140,26" fill="#38BDF8" fill-opacity="0.1" stroke="#38BDF8" stroke-width="2" stroke-linejoin="round"></polygon>
+                <path d="M128 126v-12h12" fill="none" stroke="#6E7D9E" stroke-width="1.2"></path>
+                <path d="M58 126 A18 18 0 0 0 52.7 113.3" fill="none" stroke="#38BDF8" stroke-width="1.2" opacity="0.8"></path>
+                <path d="M140 44 A18 18 0 0 1 127.3 38.7" fill="none" stroke="#38BDF8" stroke-width="1.2" opacity="0.8"></path>
+                <text x="90" y="142" text-anchor="middle" style="fill:#E2E8F8;font-weight:700">1</text>
+                <text x="150" y="80" style="fill:#E2E8F8;font-weight:700">1</text>
+                <text x="79" y="68" text-anchor="end" style="fill:#38BDF8;font-weight:700">√2</text>
+                <text x="64" y="119" font-size="9.5" style="fill:#A8B5D1">45°</text>
+                <text x="134" y="56" text-anchor="end" font-size="9.5" style="fill:#A8B5D1">45°</text>
+              </svg>
+            </div>
+
+            <div class="flex flex-col gap-gutter-xs">
+              <p data-design-text-token="body-sm" class="font-body text-body-sm text-on-surface-variant text-balance">Isosceles right triangle: equal legs of length 1 give hypotenuse √2.</p>
+              <div class="flex flex-wrap gap-gutter-xs font-mono text-mono-md tabular-nums">
+                <span class="px-2 py-0.5 rounded bg-surface-container-high text-error">sin 45° = √2/2</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container-high text-success">cos 45° = √2/2</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container-high text-primary">tan 45° = 1</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="h-full bg-surface-container border border-outline-variant rounded-md p-gutter-md flex flex-col justify-between gap-gutter-md hover:border-secondary transition-colors duration-state-change">
+            <div class="flex items-center justify-between gap-gutter-sm">
+              <span class="px-2.5 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label text-label-sm">30°–60°–90°</span>
+              <button type="button" onclick="stop();setAngle(30);document.getElementById(&#39;circle&#39;).scrollIntoView()" class="px-2.5 py-1 rounded bg-surface-container-high text-secondary border border-outline-variant font-label text-label-sm hover:border-secondary transition-colors duration-state-change">Show 30°</button>
+            </div>
+
+            <div class="bg-surface-container-lowest border border-outline-variant rounded p-gutter-sm flex items-center justify-center">
+              <svg class="w-60 h-40" viewBox="0 0 210 155" font-size="10" aria-label="30-60-90 special right triangle">
+                <polygon points="24,126 176,126 176,38" fill="#FF8D47" fill-opacity="0.1" stroke="#FF8D47" stroke-width="2" stroke-linejoin="round"></polygon>
+                <path d="M164 126v-12h12" fill="none" stroke="#6E7D9E" stroke-width="1.2"></path>
+                <path d="M46 126 A22 22 0 0 0 43.1 115" fill="none" stroke="#FF8D47" stroke-width="1.2" opacity="0.8"></path>
+                <path d="M176 58 A20 20 0 0 1 158.7 48" fill="none" stroke="#FF8D47" stroke-width="1.2" opacity="0.8"></path>
+                <text x="100" y="142" text-anchor="middle" style="fill:#E2E8F8;font-weight:700">√3</text>
+                <text x="186" y="86" style="fill:#E2E8F8;font-weight:700">1</text>
+                <text x="92" y="72" text-anchor="end" style="fill:#FF8D47;font-weight:700">2</text>
+                <text x="53" y="119" font-size="9.5" style="fill:#A8B5D1">30°</text>
+                <text x="168" y="69" text-anchor="end" font-size="9.5" style="fill:#A8B5D1">60°</text>
+              </svg>
+            </div>
+
+            <div class="flex flex-col gap-gutter-xs">
+              <p data-design-text-token="body-sm" class="font-body text-body-sm text-on-surface-variant text-balance">Half-equilateral triangle of side 2 with legs 1 and √3.</p>
+              <div class="flex flex-wrap gap-gutter-xs font-mono text-mono-md tabular-nums">
+                <span class="px-2 py-0.5 rounded bg-surface-container-high text-error">sin 30° = 1/2</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container-high text-success">cos 30° = √3/2</span>
+                <span class="px-2 py-0.5 rounded bg-surface-container-high text-secondary">tan 30° = √3/3</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- LEARN: Degree <-> Radian Converter -->
+      <section id="conv" class="bg-surface-container-low border border-outline-variant rounded-lg p-gutter-lg flex flex-col gap-gutter-md">
+        <header class="flex flex-col gap-gutter-xs">
+          <h2 data-design-text-token="headline-lg" class="font-headline text-headline-lg text-on-surface">Degree ⇄ radian converter</h2>
+          <p data-design-text-token="body-md" class="font-body text-body-md text-on-surface-variant text-balance">Accepts decimals and expressions such as <span class="font-mono text-primary">3π/4</span> or <span class="font-mono text-primary">pi/6</span>. Synced with the unit circle.</p>
+        </header>
+        <div class="flex flex-wrap items-center gap-gutter-md">
+          <label class="flex items-center gap-gutter-sm font-label text-label-lg text-on-surface">
+            <span>Degrees</span>
+            <input id="cd" type="text" size="10" class="bg-surface-container-lowest text-on-surface font-mono text-mono-md border border-outline-variant rounded px-3 py-1.5 focus:border-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+          </label>
+          <label class="flex items-center gap-gutter-sm font-label text-label-lg text-on-surface">
+            <span>Radians</span>
+            <input id="cr" type="text" size="12" class="bg-surface-container-lowest text-on-surface font-mono text-mono-md border border-outline-variant rounded px-3 py-1.5 focus:border-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+          </label>
+        </div>
+        <p id="cf" data-design-text-token="mono-lg" class="font-mono text-mono-lg text-secondary tabular-nums"></p>
+        <div id="chips" class="flex flex-wrap gap-gutter-sm"></div>
+        <p data-design-text-token="body-sm" class="font-body text-body-sm text-on-surface-variant">rad = deg × π/180  ·  deg = rad × 180/π</p>
+      </section>
+
+      <!-- LEARN: Equation Solver -->
+      <section id="solver" class="bg-surface-container-low border border-outline-variant rounded-lg p-gutter-lg flex flex-col gap-gutter-md">
+        <header class="flex flex-col gap-gutter-xs">
+          <h2 data-design-text-token="headline-lg" class="font-headline text-headline-lg text-on-surface">Equation solver</h2>
+          <p data-design-text-token="body-md" class="font-body text-body-md text-on-surface-variant text-balance">One trig equation in x, any form: <span class="font-mono text-primary">sin(x) = 1/2</span>, <span class="font-mono text-primary">2sin(x)^2 − sin(x) − 1 = 0</span>, <span class="font-mono text-primary">sin(2x) = cos(x)</span>. Solutions appear as solar-orange dots on the unit circle.</p>
+        </header>
+        <div class="flex flex-wrap items-center gap-gutter-sm">
+          <input id="se" type="text" value="2sin(x)-1=0" size="18" aria-label="Equation" class="bg-surface-container-lowest text-on-surface font-mono text-mono-md border border-outline-variant rounded px-3 py-1.5 focus:border-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+          <select id="sm" aria-label="Angle unit" class="bg-surface-container-lowest text-on-surface font-label text-label-lg border border-outline-variant rounded px-3 py-1.5 focus:border-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+            <option value="deg">degrees</option>
+            <option value="rad">radians</option>
+          </select>
+          <span class="text-on-surface-variant text-body-md">from</span>
+          <input id="s0" type="text" value="0" size="5" aria-label="Interval start" class="bg-surface-container-lowest text-on-surface font-mono text-mono-md border border-outline-variant rounded px-2.5 py-1.5 focus:border-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+          <span class="text-on-surface-variant text-body-md">to</span>
+          <input id="s1" type="text" value="360" size="5" aria-label="Interval end" class="bg-surface-container-lowest text-on-surface font-mono text-mono-md border border-outline-variant rounded px-2.5 py-1.5 focus:border-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+          <button id="sg" data-component-id="button-primary" data-component-type="button" data-component-variant="primary" type="button" class="px-4 py-1.5 rounded bg-secondary text-on-secondary font-label text-label-lg hover:opacity-90 active:scale-95 transition-transform duration-state-change">Solve</button>
+        </div>
+        <div id="so" class="text-body-md text-on-surface space-y-2"></div>
+      </section>
+
+      <!-- EXPLORE: Graph Laboratory -->
+      <section id="graphs" class="bg-surface-container-low border border-outline-variant rounded-lg p-gutter-lg flex flex-col gap-gutter-md" hidden>
+        <header class="flex flex-col gap-gutter-xs">
+          <h2 data-design-text-token="headline-lg" class="font-headline text-headline-lg text-on-surface">Graph laboratory</h2>
+          <p data-design-text-token="body-md" class="font-body text-body-md text-on-surface-variant text-balance">y = A·f(B(x − C)) + D, with period P = 2π/B for sin/cos (tan and cot repeat every P/2). Drag on the graph to move the trace and sync the unit circle.</p>
+        </header>
+        <div id="gt1" class="flex flex-wrap items-center gap-gutter-md"></div>
+        <div class="bg-surface-container-lowest border border-outline-variant rounded-md p-gutter-sm">
+          <canvas id="gc"></canvas>
+        </div>
+        <p id="gt" data-design-text-token="mono-md" class="font-mono text-mono-md text-primary tabular-nums"></p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-gutter-md bg-surface-container border border-outline-variant rounded-md p-gutter-md">
+          <label class="flex flex-col gap-1 text-body-sm text-on-surface-variant"><span>Amplitude A <b id="vA" class="text-on-surface font-mono"></b></span><input id="A" type="range" min="-3" max="3" step=".1" value="1"></label>
+          <label class="flex flex-col gap-1 text-body-sm text-on-surface-variant"><span>Period P (×π) <b id="vP" class="text-on-surface font-mono"></b></span><input id="Pp" type="range" min=".25" max="8" step=".05" value="2"></label>
+          <label class="flex flex-col gap-1 text-body-sm text-on-surface-variant"><span>Shift C (×π) <b id="vH" class="text-on-surface font-mono"></b></span><input id="H" type="range" min="-2" max="2" step=".05" value="0"></label>
+          <label class="flex flex-col gap-1 text-body-sm text-on-surface-variant"><span>Vertical D <b id="vD" class="text-on-surface font-mono"></b></span><input id="D" type="range" min="-3" max="3" step=".1" value="0"></label>
+          <label class="flex flex-col gap-1 text-body-sm text-on-surface-variant"><span>Zoom</span><input id="Z" type="range" min=".4" max="4" step=".1" value="1"></label>
+        </div>
+        <div id="gk" class="text-body-md text-on-surface-variant space-y-1"></div>
+      </section>
+
+      <!-- EXPLORE: Right-triangle trigonometry -->
+      <section id="tri" class="bg-surface-container-low border border-outline-variant rounded-lg p-gutter-lg flex flex-col gap-gutter-md" hidden>
+        <header class="flex flex-col gap-gutter-xs">
+          <h2 data-design-text-token="headline-lg" class="font-headline text-headline-lg text-on-surface">Right-triangle trigonometry</h2>
+          <p data-design-text-token="body-md" class="font-body text-body-md text-on-surface-variant text-balance">SOH-CAH-TOA: sin = opposite/hypotenuse, cos = adjacent/hypotenuse, tan = opposite/adjacent.</p>
+        </header>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter-lg items-center">
+          <div class="lg:col-span-6 flex flex-col gap-gutter-md">
+            <div class="bg-surface-container-lowest border border-outline-variant rounded-md p-gutter-md">
+              <svg id="ts" viewBox="0 0 300 225"></svg>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-gutter-md bg-surface-container border border-outline-variant rounded-md p-gutter-md">
+              <label class="flex flex-col gap-1 text-body-sm text-on-surface-variant"><span>Angle α <b id="va" class="text-primary font-mono"></b></span><input id="ta" type="range" min="5" max="85" step="1" value="37"></label>
+              <label class="flex flex-col gap-1 text-body-sm text-on-surface-variant"><span>Hypotenuse c <b id="vc" class="text-secondary font-mono"></b></span><input id="tc" type="range" min="2" max="10" step=".5" value="5"></label>
+            </div>
+          </div>
+          <div id="tp" class="lg:col-span-6 bg-surface-container border border-outline-variant rounded-md p-gutter-md space-y-3 text-body-md text-on-surface"></div>
+        </div>
+      </section>
+
+      <!-- TOOLS: Identities & formulas -->
+      <section id="ids" class="bg-surface-container-low border border-outline-variant rounded-lg p-gutter-lg flex flex-col gap-gutter-md" hidden>
+        <header class="flex flex-col gap-gutter-xs">
+          <h2 data-design-text-token="headline-lg" class="font-headline text-headline-lg text-on-surface">Identities &amp; formulas</h2>
+          <p data-design-text-token="body-md" class="font-body text-body-md text-on-surface-variant">Filter by category or search for any identity to inspect its geometric proof and example.</p>
+        </header>
+        <div class="flex flex-wrap items-center gap-gutter-sm">
+          <input id="iq" type="text" placeholder="Search identities…" size="20" class="bg-surface-container-lowest text-on-surface font-body text-body-md border border-outline-variant rounded px-3 py-1.5 focus:border-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+          <div id="ic" class="flex flex-wrap gap-gutter-xs"></div>
+        </div>
+        <div id="il" class="divide-y divide-outline-variant"></div>
+      </section>
+
+      <!-- TOOLS: Scientific calculator -->
+      <section id="calc" class="bg-surface-container-low border border-outline-variant rounded-lg p-gutter-lg flex flex-col gap-gutter-md" hidden>
+        <header class="flex flex-col gap-gutter-xs">
+          <h2 data-design-text-token="headline-lg" class="font-headline text-headline-lg text-on-surface">Scientific calculator</h2>
+          <p data-design-text-token="body-md" class="font-body text-body-md text-on-surface-variant">Evaluates exact radical values alongside decimal approximations.</p>
+        </header>
+        <div class="flex flex-wrap items-center gap-gutter-sm">
+          <input id="ci" type="text" size="26" placeholder="sin(30)+√2/2" class="flex-1 min-w-[200px] bg-surface-container-lowest text-on-surface font-mono text-mono-lg border border-outline-variant rounded px-3 py-2 focus:border-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+          <button id="cm" type="button" class="px-3.5 py-2 rounded bg-primary text-on-primary font-label text-label-lg">DEG</button>
+          <button id="cc2" type="button" class="px-3.5 py-2 rounded bg-surface-container-high text-on-surface border border-outline-variant font-label text-label-lg hover:border-primary">Copy result</button>
+        </div>
+        <div id="co" class="font-mono text-mono-lg text-secondary min-h-[28px] tabular-nums"></div>
+        <div id="cbs" class="grid grid-cols-6 sm:grid-cols-8 gap-gutter-xs"></div>
+        <div id="ch" class="space-y-1 text-body-sm font-mono"></div>
+      </section>
+
+      <!-- PRACTICE -->
+      <section id="practice" class="bg-surface-container-low border border-outline-variant rounded-lg p-gutter-lg flex flex-col gap-gutter-md" hidden>
+        <header class="flex flex-wrap items-center justify-between gap-gutter-md">
+          <div>
+            <h2 data-design-text-token="headline-lg" class="font-headline text-headline-lg text-on-surface">Practice</h2>
+            <p data-design-text-token="body-md" class="font-body text-body-md text-on-surface-variant">Test your intuition on unit circle values, radian conversions, and identities.</p>
+          </div>
+          <b id="pscore" class="font-mono text-mono-md px-3 py-1 rounded-full bg-surface-container border border-outline-variant text-primary tabular-nums"></b>
+        </header>
+        <div class="flex flex-wrap items-center gap-gutter-sm">
+          <select id="pv" aria-label="Difficulty level" class="bg-surface-container-lowest text-on-surface font-label text-label-lg border border-outline-variant rounded px-3 py-1.5 focus:border-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+            <option value="0">Beginner</option>
+            <option value="1">Intermediate</option>
+            <option value="2">Advanced</option>
+          </select>
+          <button id="pn" type="button" class="px-4 py-1.5 rounded bg-primary text-on-primary font-label text-label-lg hover:opacity-90">New question</button>
+          <button id="pr" type="button" class="px-4 py-1.5 rounded bg-surface-container-high text-on-surface border border-outline-variant font-label text-label-lg hover:border-secondary">Retry missed</button>
+        </div>
+        <p id="pq" class="font-headline text-headline-md text-on-surface"></p>
+        <div id="po" class="grid grid-cols-1 sm:grid-cols-2 gap-gutter-sm"></div>
+        <p id="pf" class="text-body-md text-on-surface-variant"></p>
+      </section>
+
+      <!-- Workspace Bottom Pager -->
+      <div id="workspace-pager" class="flex items-center justify-between gap-gutter-md pt-gutter-sm">
+        <button id="ws-prev" type="button" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-md bg-surface-container-low border border-outline-variant text-on-surface font-label text-label-lg hover:border-primary hover:text-primary transition-colors duration-state-change">
+          <span class="material-symbols-outlined text-title-md" aria-hidden="true">arrow_back</span>
+          <span id="ws-prev-label">Previous</span>
+        </button>
+        <button id="ws-next" type="button" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-md bg-surface-container-low border border-outline-variant text-on-surface font-label text-label-lg hover:border-primary hover:text-primary transition-colors duration-state-change">
+          <span id="ws-next-label">Next</span>
+          <span class="material-symbols-outlined text-title-md" aria-hidden="true">arrow_forward</span>
+        </button>
+      </div>
+    </main>
+
+    <footer class="border-t border-outline-variant bg-surface-container-low mt-gutter-lg">
+      <div class="max-w-[1200px] mx-auto px-page-margin py-gutter-md flex flex-wrap items-center justify-between gap-gutter-sm text-body-sm text-on-surface-variant">
+        <span class="font-headline text-label-lg text-on-surface">JYLab Trigonometry</span>
+        <span class="font-body text-body-md text-on-surface-variant">Developed by: <b class="text-secondary font-headline">Jo Seungyeong</b></span>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const $ = s => document.querySelector(s), P = Math.PI, FN = ['sin', 'cos', 'tan', 'csc', 'sec', 'cot'];
+    const S0 = { 0: '0', 30: '1/2', 45: '√2/2', 60: '√3/2', 90: '1' }, T0 = { 0: '0', 30: '√3/3', 45: '1', 60: '√3' }, RS = { '1/2': '2', '√2/2': '√2', '√3/2': '2√3/3', '1': '1' }, RT = { '√3/3': '√3', '1': '1', '√3': '√3/3' };
+    const nd = d => ((d % 360) + 360) % 360, ref = n => n <= 90 ? n : n <= 180 ? 180 - n : n <= 270 ? n - 180 : 360 - n, sg = (v, s) => v === '0' ? '0' : (s < 0 ? '−' : '') + v;
+    function ex(d, f) {
+      if (Math.abs(d - Math.round(d)) > 1e-9) return null;
+      d = nd(Math.round(d)); const r = ref(d); if (!(r in S0)) return null;
+      const ss = d > 180 ? -1 : 1, cs = d > 90 && d < 270 ? -1 : 1, sv = S0[r], cv = S0[90 - r], tv = T0[r];
+      if (f == 'sin') return sg(sv, ss); if (f == 'cos') return sg(cv, cs); if (f == 'tan') return r == 90 ? 'undefined' : sg(tv, ss * cs);
+      if (f == 'csc') return sv == '0' ? 'undefined' : sg(RS[sv], ss); if (f == 'sec') return cv == '0' ? 'undefined' : sg(RS[cv], cs);
+      return r == 0 ? 'undefined' : r == 90 ? '0' : sg(RT[tv], ss * cs);
+    }
+    function pf(x) {
+      const r = x / P;
+      for (let d = 1; d <= 12; d++) {
+        const n = Math.round(r * d);
+        if (Math.abs(n / d - r) < 1e-9) {
+          if (!n) return '0';
+          const a = Math.abs(n);
+          return (n < 0 ? '−' : '') + (a == 1 ? '' : a) + 'π' + (d > 1 ? '/' + d : '');
+        }
+      }
+      return null;
+    }
+    const f6 = v => !isFinite(v) || Math.abs(v) > 1e9 ? 'undefined' : String(+(Math.abs(v) < 5e-7 ? 0 : v).toFixed(6));
+    function fv(f, r) {
+      const s = Math.sin(r), c = Math.cos(r), e = 1e-9;
+      switch (f) {
+        case 'sin': return s; case 'cos': return c; case 'tan': return Math.abs(c) < e ? NaN : s / c;
+        case 'csc': return Math.abs(s) < e ? NaN : 1 / s; case 'sec': return Math.abs(c) < e ? NaN : 1 / c; case 'cot': return Math.abs(s) < e ? NaN : c / s;
+      }
+    }
+    const EX = [['1/2', .5], ['√2/2', Math.SQRT1_2], ['√3/2', Math.sqrt(3) / 2], ['√3/3', 1 / Math.sqrt(3)], ['√3', Math.sqrt(3)], ['√2', Math.SQRT2], ['2√3/3', 2 / Math.sqrt(3)]];
+    function exOf(v) { for (const [s, x] of EX) { if (Math.abs(Math.abs(v) - x) < 1e-10) return (v < 0 ? '−' : '') + s } return null }
+    const SUP = { '²': 2, '³': 3 };
+    function norm(s) { return s.toLowerCase().replace(/[²³]/g, m => '^' + SUP[m]).replace(/(sin|cos|tan)\^-1/g, 'a$1').replace(/(sin|cos|tan|csc|sec|cot)\^(\d+)\(((?:[^()]|\([^()]*\))*)\)/g, '($1($3))^$2') }
+    function calc(s, deg, v = {}) {
+      const tk = norm(s).replace(/×/g, '*').replace(/÷/g, '/').replace(/−/g, '-').toLowerCase().match(/\d+\.?\d*|\.\d+|[a-z]+|π|[-+*/^()√]/g) || [];
+      let i = 0; const pk = () => tk[i], nx = () => tk[i++], D = x => deg ? x * P / 180 : x, R = x => deg ? x * 180 / P : x, isv = k => k && /^[\d.a-zπ√(]/.test(k);
+      function E() { let a = T(); while (pk() == '+' || pk() == '-') { const o = nx(), b = T(); a = o == '+' ? a + b : a - b } return a }
+      function T() { let a = U(); for (; ;) { const k = pk(); if (k == '*' || k == '/') { nx(); const b = U(); if (k == '/') { if (b == 0) throw 'Division by zero'; a /= b } else a *= b } else if (isv(k)) a *= U(); else return a } }
+      function U() { if (pk() == '-') { nx(); return -U() } if (pk() == '+') { nx(); return U() } const a = F(); if (pk() == '^') { nx(); return Math.pow(a, U()) } return a }
+      function AR() { if (pk() == '-') { nx(); return -AR() } return F() }
+      function F() {
+        const t = nx(); if (t === undefined) throw 'Incomplete expression';
+        if (/^[\d.]/.test(t)) return parseFloat(t);
+        if (t == '(') { const a = E(); if (nx() != ')') throw 'Missing )'; return a }
+        if (t == 'π' || t == 'pi') return P; if (t == 'e') return Math.E; if (t in v) return v[t];
+        if (t == '√' || t == 'sqrt') { const a = AR(); if (a < 0) throw 'Domain error: √ of a negative number'; return Math.sqrt(a) }
+        const a = AR(), s = Math.sin(D(a)), c = Math.cos(D(a));
+        switch (t) {
+          case 'sin': return s; case 'cos': return c;
+          case 'tan': if (Math.abs(c) < 1e-12) throw 'tan is undefined here (cos = 0)'; return s / c;
+          case 'csc': if (Math.abs(s) < 1e-12) throw 'csc is undefined here (sin = 0)'; return 1 / s;
+          case 'sec': if (Math.abs(c) < 1e-12) throw 'sec is undefined here (cos = 0)'; return 1 / c;
+          case 'cot': if (Math.abs(s) < 1e-12) throw 'cot is undefined here (sin = 0)'; return c / s;
+          case 'asin': case 'acos': if (Math.abs(a) > 1) throw 'Domain error: |x| must be ≤ 1'; return R(t == 'asin' ? Math.asin(a) : Math.acos(a));
+          case 'atan': return R(Math.atan(a));
+        }
+        throw 'Unknown: ' + t;
+      }
+      const r = E(); if (i < tk.length) throw 'Unexpected ' + tk[i]; return r;
+    }
+
+    // ---------- unit circle ----------
+    let ang = 45, deg = true, dec = false, dir = 1, anim = null, last = 0, rev = 0;
+    const uc = $('#uc'), A16 = [0, 30, 45, 60, 90, 120, 135, 150, 180, 210, 225, 240, 270, 300, 315, 330];
+    let h = '<circle r="136" fill="none" stroke="#1E2945" stroke-width="1" stroke-dasharray="2 4" class="orbit-ring-slow" />' +
+      '<path id="qh" fill="#38BDF8" opacity=".12"/>' +
+      '<line class="ax" x1="-155" x2="155" y1="0" y2="0" /><line class="ax" y1="-155" y2="155" x1="0" x2="0" />' +
+      '<circle class="cc" r="100" />';
+    A16.forEach(a => {
+      const c = Math.cos(a * P / 180), s = Math.sin(a * P / 180), X = c * 122, Y = -s * 122;
+      h += `<line class="ax" x1="${c * 96}" y1="${-s * 96}" x2="${c * 104}" y2="${-s * 104}" /><text text-anchor="middle" x="${X}" y="${Y + 1}">${a}°</text><text text-anchor="middle" x="${X}" y="${Y + 8}" opacity=".75">${pf(a * P / 180)}</text>`;
+    });
+    h += '<text x="96" y="-4" text-anchor="end">1</text><text x="-96" y="-4">−1</text><text x="4" y="-94">1</text><text x="4" y="102">−1</text>' +
+      [['I', 50, -50], ['II', -50, -50], ['III', -50, 50], ['IV', 50, 50]].map(q => `<text x="${q[1]}" y="${q[2]}" text-anchor="middle" font-size="12" opacity=".35">${q[0]}</text>`).join('') +
+      '<g id="sol"></g><line id="px" class="ss ds" /><line id="py" class="cs ds" /><line id="cx" class="cs" /><line id="sy" class="ss" />' +
+      '<path id="arc" fill="none" stroke="#38BDF8" stroke-width="2.5" stroke-opacity=".85"/>' +
+      '<line id="rd" stroke="#38BDF8" stroke-width="2.5" stroke-opacity=".9" x1="0" y1="0" />' +
+      '<circle id="pt-pulse" r="11" fill="none" stroke="#38BDF8" stroke-width="1.5" class="beacon-ring" />' +
+      '<circle id="pt" r="6.5" fill="#FF8D47" stroke="#E2E8F8" stroke-width="1.5" style="cursor:grab" />' +
+      '<text id="pl2" style="fill:#E2E8F8;font-weight:700"></text>';
+    uc.innerHTML = h;
+    const at = (s, o) => { const e = $(s); if (!e) return; for (const k in o) e.setAttribute(k, o[k]); };
+
+    (function buildMiniWave() {
+      let ds = '', dc = '';
+      for (let x = 0; x <= 360; x += 2) {
+        const rad = x * P / 180, ys = 36 - Math.sin(rad) * 26, yc = 36 - Math.cos(rad) * 26;
+        ds += (x ? 'L' : 'M') + x + ' ' + ys.toFixed(1);
+        dc += (x ? 'L' : 'M') + x + ' ' + yc.toFixed(1);
+      }
+      $('#mw-sin').setAttribute('d', ds);
+      $('#mw-cos').setAttribute('d', dc);
+    })();
+
+    function setAngle(d) { ang = d < 0 || d > 360 ? nd(d) : d; upd(); }
+    function upd() {
+      const r = ang * P / 180, c = Math.cos(r), s = Math.sin(r), X = c * 100, Y = -s * 100, n = nd(ang), q = n % 90 ? Math.floor(n / 90) + 1 : 0, a2 = Math.min(ang, 359.99) * P / 180;
+      at('#qh', { d: q ? 'M0 0L100 0A100 100 0 0 0 0 -100Z' : '', transform: `rotate(${-90 * (q - 1)})` });
+      at('#px', { x1: X, y1: Y, x2: X, y2: 0 }); at('#py', { x1: X, y1: Y, x2: 0, y2: Y });
+      at('#cx', { x1: 0, y1: 0, x2: X, y2: 0 }); at('#sy', { x1: X, y1: 0, x2: X, y2: Y });
+      at('#arc', { d: `M30 0A30 30 0 ${ang > 180 ? 1 : 0} 0 ${30 * Math.cos(a2)} ${-30 * Math.sin(a2)}` });
+      at('#rd', { x2: X, y2: Y }); at('#pt', { cx: X, cy: Y }); at('#pt-pulse', { cx: X, cy: Y });
+      const lb = $('#pl2');
+      lb.textContent = `(${ex(ang, 'cos') || (dec ? f6(c) : +c.toFixed(3))}, ${ex(ang, 'sin') || (dec ? f6(s) : +s.toFixed(3))})`;
+      at('#pl2', { x: X * .5 + (c >= 0 ? -5 : 5), y: Y * .5 + (s >= 0 ? -6 : 12), 'text-anchor': c >= 0 ? 'end' : 'start' });
+
+      at('#mw-cursor', { x1: n, x2: n });
+      at('#mw-dot-sin', { cx: n, cy: 36 - s * 26 });
+      at('#mw-dot-cos', { cx: n, cy: 36 - c * 26 });
+      $('#wave-readout').textContent = `sin θ = ${s.toFixed(3)} · cos θ = ${c.toFixed(3)}`;
+      $('#nav-angle-pill').textContent = `θ = ${ang.toFixed(1)}° · ${pf(r) || r.toFixed(2) + ' rad'}`;
+
+      $('#ro').innerHTML = '<thead><tr class="border-b border-outline-variant text-label-sm text-on-surface-variant font-label"><th class="px-3 py-2">Function</th><th class="px-3 py-2">Value</th><th class="px-3 py-2">Exact</th><th class="px-3 py-2">Sign</th></tr></thead><tbody>' +
+        FN.map(f => {
+          const v = fv(f, r);
+          return `<tr class="border-b border-outline-variant last:border-0 text-body-sm"><td class="px-3 py-1.5 font-mono text-primary">${f} θ</td><td class="px-3 py-1.5 font-mono tabular-nums">${f6(v)}</td><td class="px-3 py-1.5 font-mono text-secondary">${ex(ang, f) || '—'}</td><td class="px-3 py-1.5 font-mono">${isNaN(v) ? '—' : v > 1e-9 ? '+' : v < -1e-9 ? '−' : '0'}</td></tr>`;
+        }).join('') + '</tbody>';
+
+      $('#ri').innerHTML = `θ = <b class="text-primary font-mono">${+ang.toFixed(3)}°</b> = <b class="text-secondary font-mono">${pf(r) || +r.toFixed(4)} rad</b> · Quadrant <b>${q ? ['I', 'II', 'III', 'IV'][q - 1] : 'on an axis'}</b> · Reference angle <b class="font-mono">${+ref(n).toFixed(3)}°</b>` +
+        (Math.abs(c) < 1e-9 ? '<br><span class="text-secondary">cos θ = 0 ⇒ tan θ = sin θ ÷ 0 is undefined.</span>' : '') +
+        (Math.abs(s) < 1e-9 ? '<br><span class="text-secondary">sin θ = 0 ⇒ csc θ and cot θ are undefined.</span>' : '');
+
+      if (document.activeElement != $('#ai')) $('#ai').value = deg ? +ang.toFixed(4) : (pf(r) || +r.toFixed(5));
+      $('#sl').value = ang;
+      if (document.activeElement != $('#cd') && document.activeElement != $('#cr')) {
+        $('#cd').value = +ang.toFixed(6); $('#cr').value = pf(r) || +r.toFixed(6); cfm();
+      }
+      gdraw();
+    }
+
+    function cfm() {
+      try {
+        const d = calc($('#cd').value, true);
+        $('#cf').textContent = `${+d.toFixed(6)}° × π/180 = ${pf(d * P / 180) || +(d * P / 180).toFixed(6)} rad`;
+      } catch (e) { $('#cf').textContent = e; }
+    }
+
+    uc.addEventListener('pointerdown', e => { uc.setPointerCapture(e.pointerId); stop(); mv(e); });
+    uc.addEventListener('pointermove', e => { if (e.buttons) mv(e); });
+    function mv(e) {
+      const p = uc.createSVGPoint(); p.x = e.clientX; p.y = e.clientY;
+      const q = p.matrixTransform(uc.getScreenCTM().inverse());
+      let a = nd(Math.atan2(-q.y, q.x) * 180 / P);
+      if (!dec) a = nd(Math.round(a));
+      setAngle(a);
+    }
+
+    function tick(t) {
+      if (!anim) return;
+      const dt = Math.min((t - last) / 1000, .1); last = t;
+      if (anim == 'rev') {
+        rev += dt * 72;
+        if (rev >= 360) { rev = 360; ang = dir > 0 ? 360 : 0; stop(); }
+        else ang = dir > 0 ? rev : 360 - rev;
+      } else {
+        ang = nd(ang + dir * 45 * dt);
+      }
+      upd();
+      if (anim) requestAnimationFrame(tick);
+    }
+    function go(m) {
+      anim = m; last = performance.now(); rev = 0;
+      if (m == 'rev') ang = dir > 0 ? 0 : 360;
+      $('#pl').innerHTML = m == 'loop'
+        ? '<span class="material-symbols-outlined text-title-md" aria-hidden="true">pause</span><span data-design-text-token="label-lg">Pause</span>'
+        : '<span class="material-symbols-outlined text-title-md" aria-hidden="true">play_arrow</span><span data-design-text-token="label-lg">Play</span>';
+      $('#anim-badge').textContent = m == 'loop' ? 'Live Orbit' : 'One Revolution';
+      requestAnimationFrame(tick);
+    }
+    function stop() {
+      anim = null;
+      $('#pl').innerHTML = '<span class="material-symbols-outlined text-title-md" aria-hidden="true">play_arrow</span><span data-design-text-token="label-lg">Play</span>';
+      $('#anim-badge').textContent = 'Paused';
+    }
+    $('#pl').onclick = () => { if (anim == 'loop') stop(); else go('loop'); };
+    $('#rv').onclick = () => go('rev');
+    $('#rs').onclick = () => { stop(); setAngle(0); };
+    $('#dr').onclick = e => { dir = -dir; e.target.textContent = dir > 0 ? '⟲ counter-clockwise' : '⟳ clockwise'; };
+    $('#ut').onclick = e => { deg = !deg; e.target.textContent = deg ? 'degrees' : 'radians'; $('#ai').blur(); upd(); };
+    $('#ai').onchange = () => { stop(); try { const v = calc($('#ai').value, false); setAngle(deg ? v : v * 180 / P); } catch (e) { } $('#ai').blur(); upd(); };
+    $('#dc').onclick = e => {
+      dec = !dec; e.target.textContent = dec ? 'decimals' : 'integers';
+      $('#sl').step = dec ? .5 : 1;
+      if (!dec) setAngle(Math.round(ang)); else upd();
+    };
+    $('#sl').oninput = e => { stop(); setAngle(+e.target.value); };
+    const step = s => {
+      stop(); const k = +$('#ss').value;
+      setAngle(Math.round(nd(ang) / k) * k == nd(ang) ? nd(ang + s * k) : s > 0 ? Math.floor(nd(ang) / k + 1 + 1e-9) * k : Math.ceil(nd(ang) / k - 1 - 1e-9) * k);
+    };
+    $('#sf').onclick = () => step(1); $('#sb').onclick = () => step(-1);
+
+    // special table
+    const SA = [0, 30, 45, 60, 90, 120, 135, 150, 180, 210, 225, 240, 270, 300, 315, 330, 360];
+    $('#sat').innerHTML = '<thead><tr class="border-b border-outline-variant text-label-sm text-on-surface-variant font-label"><th class="px-3 py-2">θ°</th><th class="px-3 py-2">rad</th><th class="px-3 py-2">sin</th><th class="px-3 py-2">cos</th><th class="px-3 py-2">tan</th><th class="px-3 py-2">quad</th><th class="px-3 py-2">ref</th></tr></thead><tbody>' +
+      SA.map(d => {
+        const n = nd(d), q = n % 90 ? ['I', 'II', 'III', 'IV'][Math.floor(n / 90)] : 'axis';
+        return `<tr class="cl cursor-pointer border-b border-outline-variant last:border-0 hover:bg-surface-container-high transition-colors duration-state-change font-mono text-mono-md tabular-nums" data-d="${d}"><td class="px-3 py-1.5 text-primary font-bold">${d}°</td><td class="px-3 py-1.5 text-secondary">${pf(d * P / 180)}</td><td class="px-3 py-1.5">${ex(d, 'sin')}</td><td class="px-3 py-1.5">${ex(d, 'cos')}</td><td class="px-3 py-1.5">${ex(d, 'tan')}</td><td class="px-3 py-1.5">${q}</td><td class="px-3 py-1.5">${ref(n)}°</td></tr>`;
+      }).join('') + '</tbody>';
+    $('#sat').onclick = e => { const t = e.target.closest('tr.cl'); if (t) { stop(); setAngle(+t.dataset.d); $('#circle').scrollIntoView(); } };
+
+    // converter
+    $('#cd').oninput = () => { try { const d = calc($('#cd').value, true); $('#cr').value = pf(d * P / 180) || +(d * P / 180).toFixed(8); cfm(); stop(); ang = nd(d); if (d == 360) ang = 360; upd(); } catch (e) { $('#cf').textContent = e; } };
+    $('#cr').oninput = () => { try { const r = calc($('#cr').value, false); $('#cd').value = +(r * 180 / P).toFixed(8); cfm(); stop(); ang = nd(r * 180 / P); upd(); } catch (e) { $('#cf').textContent = e; } };
+    $('#chips').innerHTML = [30, 45, 60, 90, 180, 270, 360].map(d => `<button type="button" data-d="${d}" class="px-3 py-1 rounded-full bg-surface-container-high text-on-surface border border-outline-variant font-mono text-mono-md hover:border-primary hover:text-primary transition-colors duration-state-change">${pf(d * P / 180)}</button>`).join('');
+    $('#chips').onclick = e => { const d = e.target.dataset.d; if (d) { stop(); setAngle(+d); } };
+
+    // ---------- graphs ----------
+    const COL = { sin: '#FF897D', cos: '#4ADE80', tan: '#38BDF8', csc: '#FF8D47', sec: '#C084FC', cot: '#2DD4BF' }, gs = { on: { sin: 1, cos: 1 }, A: 1, Pp: 2, H: 0, D: 0, Z: 1 }, cv = $('#gc'), g = cv.getContext('2d');
+    $('#gt1').innerHTML = FN.map(f => `<label class="inline-flex items-center gap-1.5 cursor-pointer px-2.5 py-1 rounded bg-surface-container border border-outline-variant"><input type="checkbox" data-f="${f}" ${gs.on[f] ? 'checked' : ''} class="rounded text-primary focus:ring-primary bg-surface-container-lowest border-outline-variant"> <b style="color:${COL[f]}" class="font-mono text-mono-md">${f}</b></label>`).join('');
+    $('#gt1').onchange = e => { gs.on[e.target.dataset.f] = e.target.checked; gdraw(); };
+    ['A', 'Pp', 'H', 'D', 'Z'].forEach(k => $('#' + k).oninput = e => { gs[k] = +e.target.value; gdraw(); });
+    const pr = x => pf(x) || (+x.toFixed(3));
+    function gdraw() {
+      const w = cv.clientWidth, hh = cv.clientHeight, dp = devicePixelRatio || 1; if (!w) return;
+      cv.width = w * dp; cv.height = hh * dp; g.setTransform(dp, 0, 0, dp, 0, 0);
+      const xs = w / (4 * P) * gs.Z, ys = hh / 8 * gs.Z, X = x => w / 2 + x * xs, Y = y => hh / 2 - y * ys, Pd = gs.Pp * P, B = 2 * P / Pd, C = gs.H * P, x0 = -w / 2 / xs, x1 = w / 2 / xs;
+      const L = (a, b, c, d) => { g.beginPath(); g.moveTo(a, b); g.lineTo(c, d); g.stroke(); };
+      g.clearRect(0, 0, w, hh); g.font = '11px "Space Mono", monospace'; g.textAlign = 'center';
+      for (let k = Math.ceil(x0 / (P / 2)); k <= x1 / (P / 2); k++) {
+        g.strokeStyle = '#1E2945'; g.lineWidth = k % 2 ? .5 : 1; L(X(k * P / 2), 0, X(k * P / 2), hh);
+        g.fillStyle = '#A8B5D1'; if (k) g.fillText(pf(k * P / 2), X(k * P / 2), Y(0) + 13);
+      }
+      for (let y = Math.ceil(-hh / 2 / ys); y <= hh / 2 / ys; y++) {
+        g.strokeStyle = '#1E2945'; g.lineWidth = .5; L(0, Y(y), w, Y(y));
+        g.fillStyle = '#A8B5D1'; if (y) g.fillText(y, X(0) - 10, Y(y) + 4);
+      }
+      g.strokeStyle = '#6E7D9E'; g.lineWidth = 1.5; L(0, Y(0), w, Y(0)); L(X(0), 0, X(0), hh);
+      const act = FN.filter(f => gs.on[f]);
+      act.forEach(f => {
+        g.strokeStyle = COL[f]; g.lineWidth = 2.4; g.beginPath(); let pen = 0, pr0;
+        for (let px = 0; px <= w; px++) {
+          const x = (px - w / 2) / xs, raw = fv(f, B * (x - C)), y = gs.A * raw + gs.D;
+          if (isNaN(raw) || Math.abs(y) > 60) { pen = 0; pr0 = undefined; continue; }
+          if (pr0 !== undefined && pr0 * raw < 0 && Math.abs(pr0) > 3 && Math.abs(raw) > 3) pen = 0;
+          pr0 = raw; pen ? g.lineTo(px, Y(y)) : g.moveTo(px, Y(y)); pen = 1;
+        }
+        g.stroke();
+        if (f == 'tan' || f == 'sec' || f == 'csc' || f == 'cot') {
+          const off = f == 'tan' || f == 'sec' ? P / 2 : 0; g.setLineDash([4, 4]); g.lineWidth = 1;
+          for (let k = Math.floor(((x0 - C) * B - off) / P) - 1; k <= Math.ceil(((x1 - C) * B - off) / P) + 1; k++) {
+            const x = C + (off + k * P) / B; L(X(x), 0, X(x), hh);
+          }
+          g.setLineDash([]);
+        }
+      });
+      const tx = ang * P / 180; let t = `x = ${pr(tx)} (${+ang.toFixed(2)}°)`;
+      act.forEach(f => {
+        const y = gs.A * fv(f, B * (tx - C)) + gs.D;
+        if (isFinite(y)) { g.fillStyle = COL[f]; g.beginPath(); g.arc(X(tx), Y(y), 5.5, 0, 7); g.fill(); }
+        t += ` · ${f}: ${isFinite(y) ? f6(y) : 'undefined'}`;
+      });
+      g.strokeStyle = '#38BDF8'; g.lineWidth = 1.2; g.setLineDash([3, 3]); L(X(tx), 0, X(tx), hh); g.setLineDash([]);
+      $('#gt').textContent = t;
+      $('#vA').textContent = gs.A; $('#vP').textContent = gs.Pp + 'π'; $('#vH').textContent = gs.H + 'π'; $('#vD').textContent = gs.D;
+      $('#gk').innerHTML = act.map(f => {
+        const a = Math.abs(gs.A), c2 = f == 'tan' || f == 'cot' ? Pd / 2 : Pd, d = gs.D, z = q => `x = ${(C + q) ? pr(C + q) + ' + ' : ''}k·${pr(Pd / 2)}, k∈ℤ`;
+        let s = `<p><b style="color:${COL[f]}">${f}</b>: period ${pr(c2)}; `;
+        s += f == 'sin' || f == 'cos' ? `max ${+(d + a).toFixed(3)}, min ${+(d - a).toFixed(3)}` : f == 'csc' || f == 'sec' ? `y ≥ ${+(d + a).toFixed(3)} or y ≤ ${+(d - a).toFixed(3)}` : 'range ℝ';
+        if (!d && f != 'csc' && f != 'sec') s += `; zeros ${z(f == 'sin' || f == 'tan' ? 0 : Pd / 4)}`;
+        if (f == 'tan' || f == 'sec') s += `; asymptotes ${z(Pd / 4)}`;
+        if (f == 'csc' || f == 'cot') s += `; asymptotes ${z(0)}`;
+        return s + '</p>';
+      }).join('');
+    }
+    const gp = e => { if (e.buttons) { stop(); const r = cv.getBoundingClientRect(), x = (e.clientX - r.left - r.width / 2) / (r.width / (4 * P) * gs.Z); setAngle(x * 180 / P); } };
+    cv.onpointerdown = e => { cv.setPointerCapture(e.pointerId); gp(e); }; cv.onpointermove = gp;
+    addEventListener('resize', gdraw);
+
+    // ---------- triangle ----------
+    function tri() {
+      const al = +$('#ta').value, c = +$('#tc').value, r = al * P / 180, a = c * Math.sin(r), b = c * Math.cos(r), k = 20, x0 = 30, y0 = 200, Cx = x0 + b * k, By = y0 - a * k, m = (u, v) => (u + v) / 2;
+      $('#ts').innerHTML = `<polygon points="${x0},${y0} ${Cx},${y0} ${Cx},${By}" fill="#38BDF8" fill-opacity=".12" />` +
+        `<line x1="${Cx}" y1="${y0}" x2="${Cx}" y2="${By}" class="ss" /><line x1="${x0}" y1="${y0}" x2="${Cx}" y2="${y0}" class="cs" />` +
+        `<line x1="${x0}" y1="${y0}" x2="${Cx}" y2="${By}" stroke="#38BDF8" stroke-width="3.5" /><path d="M${Cx - 10} ${y0}v-10h10" fill="none" stroke="#A8B5D1" />` +
+        `<text x="${Cx + 6}" y="${m(y0, By)}" font-size="11">opp ${a.toFixed(2)}</text>` +
+        `<text x="${m(x0, Cx)}" y="${y0 + 16}" text-anchor="middle" font-size="11">adj ${b.toFixed(2)}</text>` +
+        `<text x="${m(x0, Cx) - 8}" y="${m(y0, By) - 8}" text-anchor="end" font-size="11">hyp ${c}</text>` +
+        `<text x="${x0 + 34}" y="${y0 - 6}" font-size="11">α=${al}°</text>`;
+      $('#va').textContent = al + '°'; $('#vc').textContent = c; const bt = 90 - al;
+      $('#tp').innerHTML = `<p class="font-mono text-mono-md tabular-nums">sin α = opp/hyp = ${a.toFixed(3)}/${c} = <b class="text-error">${f6(a / c)}</b><br>cos α = adj/hyp = ${b.toFixed(3)}/${c} = <b class="text-success">${f6(b / c)}</b><br>tan α = opp/adj = ${a.toFixed(3)}/${b.toFixed(3)} = <b class="text-primary">${f6(a / b)}</b></p>` +
+        `<p><b>Pythagoras:</b> a² + b² = ${(a * a).toFixed(3)} + ${(b * b).toFixed(3)} = ${(a * a + b * b).toFixed(3)} = c² = ${c * c}</p>` +
+        `<p><b>Inverse:</b> sin⁻¹(${f6(a / c)}) = ${f6(Math.asin(a / c) * 180 / P)}°; cos⁻¹(${f6(b / c)}) = ${f6(Math.acos(b / c) * 180 / P)}°</p>` +
+        `<p><b>Complementary angle</b> β = 90° − α = ${bt}°: sin β = cos α = ${f6(Math.sin(bt * P / 180))}.</p>` +
+        `<p class="text-on-surface-variant text-body-sm">Change c and the sides scale, but the ratios above stay invariant—every right triangle with angle α is similar.</p>`;
+    }
+    ['ta', 'tc'].forEach(i => $('#' + i).oninput = tri); tri();
+
+    // ---------- identities ----------
+    const ID = [
+      ['Pythagorean', 'sin²θ + cos²θ = 1', 'The point (cos θ, sin θ) lies on x² + y² = 1.', 'θ = 30°: ¼ + ¾ = 1', 'Distance formula on the unit circle.'],
+      ['Pythagorean', '1 + tan²θ = sec²θ', 'Divide sin²θ + cos²θ = 1 by cos²θ.', 'tan 45° = 1 ⇒ 1 + 1 = 2 = (√2)²', 'Divide each term by cos²θ.'],
+      ['Pythagorean', '1 + cot²θ = csc²θ', 'Divide sin²θ + cos²θ = 1 by sin²θ.', 'θ = 30°: cot² = 3 ⇒ 4 = csc² 30° = 2²', ''],
+      ['Reciprocal', 'csc θ = 1/sin θ, sec θ = 1/cos θ, cot θ = 1/tan θ', 'Each reciprocal function is undefined where its partner is 0.', 'sec 60° = 1/(1/2) = 2', ''],
+      ['Quotient', 'tan θ = sin θ / cos θ, cot θ = cos θ / sin θ', 'Slope of the radius = y/x.', 'tan 30° = (1/2)/(√3/2) = 1/√3 = √3/3', ''],
+      ['Angle', 'sin(−θ) = −sin θ, cos(−θ) = cos θ, tan(−θ) = −tan θ', 'Reflecting across the x-axis flips y only.', 'sin(−30°) = −1/2, cos(−30°) = √3/2', ''],
+      ['Angle', 'sin(90°−θ) = cos θ, cos(90°−θ) = sin θ, tan(90°−θ) = cot θ', 'Complementary angles swap opposite and adjacent sides.', 'sin 60° = cos 30°', ''],
+      ['Angle', 'sin(θ+2π) = sin θ, cos(θ+2π) = cos θ, tan(θ+π) = tan θ', 'A full turn returns to the same point; tan repeats every π.', 'tan 225° = tan 45° = 1', ''],
+      ['Addition', 'sin(A ± B) = sin A cos B ± cos A sin B', 'Rotating by A then B.', 'sin 75° = sin(45°+30°) = (√6+√2)/4', 'Rotate (cos B, sin B) by A with a rotation matrix.'],
+      ['Addition', 'cos(A ± B) = cos A cos B ∓ sin A sin B', 'Same rotation, x-coordinate.', 'cos 15° = cos(45°−30°) = (√6+√2)/4', ''],
+      ['Addition', 'tan(A ± B) = (tan A ± tan B) / (1 ∓ tan A tan B)', 'Divide the sin formula by the cos formula.', 'tan 75° = 2+√3', ''],
+      ['Double angle', 'sin 2θ = 2 sin θ cos θ', 'Set A = B in the sine addition formula.', 'θ = 30°: sin 60° = 2·½·√3/2 = √3/2', 'sin(θ+θ) = sinθcosθ + cosθsinθ.'],
+      ['Double angle', 'cos 2θ = cos²θ − sin²θ = 2cos²θ − 1 = 1 − 2sin²θ', 'Set A = B, then use sin² + cos² = 1.', 'θ = 30°: 1 − 2·¼ = ½ = cos 60°', ''],
+      ['Double angle', 'tan 2θ = 2 tan θ / (1 − tan²θ)', 'Set A = B in the tangent addition formula.', 'θ = 30°: (2/√3)/(1−⅓) = √3', ''],
+      ['Half angle', 'sin(θ/2) = ±√((1 − cos θ)/2), cos(θ/2) = ±√((1 + cos θ)/2)', 'Rearranged double-angle formulas; sign depends on quadrant.', 'sin 15° = √((1−√3/2)/2)', ''],
+      ['Product-to-sum', 'sin A cos B = ½[sin(A+B) + sin(A−B)]', 'Add the sine addition and subtraction formulas.', 'sin 75° cos 15° = ½[sin 90° + sin 60°]', ''],
+      ['Sum-to-product', 'sin A + sin B = 2 sin((A+B)/2) cos((A−B)/2)', 'Substitute A = (x+y)/2, B = (x−y)/2 in product-to-sum.', 'sin 75° + sin 15° = 2 sin 45° cos 30°', '']
+    ];
+    const cats = ['All', ...new Set(ID.map(i => i[0]))]; let cat = 'All';
+    function rid() {
+      const q = $('#iq').value.toLowerCase();
+      $('#ic').innerHTML = cats.map(c => `<button type="button" data-c="${c}" class="px-3 py-1 rounded-full font-label text-label-sm border transition-colors duration-state-change ${c == cat ? 'bg-primary text-on-primary border-primary' : 'bg-surface-container-high text-on-surface border-outline-variant hover:border-primary'}">${c}</button>`).join('');
+      $('#il').innerHTML = ID.filter(i => (cat == 'All' || i[0] == cat) && (i.join(' ').toLowerCase().includes(q))).map(i => `<details class="py-3"><summary class="cursor-pointer flex items-center justify-between gap-2"><b class="font-mono text-mono-lg text-primary">${i[1]}</b> <span class="text-label-sm font-label px-2 py-0.5 rounded bg-surface-container text-secondary">${i[0]}</span></summary><div class="mt-2 space-y-1 text-body-md text-on-surface-variant"><p>${i[2]}</p><p class="text-balance"><b class="text-on-surface">Example:</b> <span class="font-mono">${i[3]}</span></p>${i[4] ? `<p><b class="text-on-surface">Derivation:</b> ${i[4]}</p>` : ''}</div></details>`).join('') || '<p class="py-4 text-on-surface-variant">No matching identities.</p>';
+    }
+    $('#iq').oninput = rid; $('#ic').onclick = e => { if (e.target.dataset.c) { cat = e.target.dataset.c; rid(); } }; rid();
+
+    // ---------- solver ----------
+    $('#sm').onchange = () => { const d = $('#sm').value == 'deg'; $('#s1').value = d ? 360 : '2π'; };
+    function solve() {
+      const m = $('#sm').value == 'deg', out = $('#so'), src = $('#se').value.replace(/\s/g, '').toLowerCase(); $('#sol').innerHTML = '';
+      try {
+        const q = src.split('='); if (q.length != 2) throw 'Enter an equation such as sin(x)=1/2';
+        const fs = [...new Set(q[0].match(/(sin|cos|tan)\(x\)/g) || [])];
+        if (fs.length != 1 || /x/.test(q[0].split(fs[0]).join('') + q[1])) return gen(src, m);
+        const f = fs[0].slice(0, 3), Ls = q[0].split(fs[0]).join('(t)'), l0 = calc(Ls, m, { t: 0 }), l1 = calc(Ls, m, { t: 1 }), l2 = calc(Ls, m, { t: 2 }), rr = calc(q[1], m);
+        if (Math.abs(l2 - 2 * l1 + l0) > 1e-9) return gen(src, m); if (l1 == l0) throw f + '(x) cancels out';
+        let t = (rr - l0) / (l1 - l0); if (Math.abs(t) < 1e-12) t = 0;
+        const lo = calc($('#s0').value, m) * (m ? P / 180 : 1), hi = calc($('#s1').value, m) * (m ? P / 180 : 1);
+        const U = x => m ? `${f6(x * 180 / P)}°` + (pf(x) ? ` (${pf(x)})` : '') : (pf(x) || f6(x)) + ` ≈ ${f6(x)}`, V = x => m ? f6(x * 180 / P) + '°' : pf(x) || f6(x);
+        const et = exOf(t), tt = (et || f6(t)); let al, base, per = 2 * P, st = [`Isolate the trig function: ${f}(x) = <b class="text-primary font-mono">${tt}</b>${et && Math.abs(t - Math.round(t * 1e6) / 1e6) > 1e-9 ? ' ≈ ' + f6(t) : ''}.`];
+        if (f == 'tan') { al = Math.atan(t); base = [al]; per = P; }
+        else {
+          if (Math.abs(t) > 1 + 1e-12) { out.innerHTML = st[0] + `<br><b class="text-error">No solutions:</b> ${f}(x) always lies in [−1, 1].`; return; }
+          t = Math.max(-1, Math.min(1, t)); al = f == 'sin' ? Math.asin(t) : Math.acos(t); base = f == 'sin' ? [al, P - al] : [al, -al];
+        }
+        const ra = f == 'tan' ? Math.atan(Math.abs(t)) : f == 'sin' ? Math.asin(Math.abs(t)) : Math.acos(Math.abs(t));
+        st.push(`Reference angle: ${f}⁻¹(${exOf(Math.abs(t)) || f6(Math.abs(t))}) = ${U(ra)}.`);
+        st.push(f == 'tan' ? `tan has period π: x = ${V(al)} + k·${V(P)}, k ∈ ℤ.` : f == 'sin' ? `sin is ${t >= 0 ? 'positive in QI, QII' : 'negative in QIII, QIV'}: x = ${V(al)} + 2πk or x = ${V(P - al)} + 2πk.` : `cos = ${tt} at ±${V(al)}: x = ±${V(al)} + 2πk.`);
+        let all = []; for (let k = -40; k <= 40; k++)base.forEach(b => { const x = b + k * per; if (x >= lo - 1e-9 && x <= hi + 1e-9) all.push(x); });
+        all.sort((a, b) => a - b); all = all.filter((x, i) => !i || x - all[i - 1] > 1e-9);
+        st.push(`Solutions in [${U(lo).split(' ')[0]}, ${U(hi).split(' ')[0]}]: ${all.length ? '<b class="text-secondary font-mono">' + all.map(U).join(' &nbsp;|&nbsp; ') + '</b>' : '<b>none</b>'}.`);
+        out.innerHTML = '<ol class="list-decimal list-inside space-y-1 bg-surface-container border border-outline-variant rounded-md p-gutter-md">' + st.map(s => `<li>${s}</li>`).join('') + '</ol>';
+        $('#sol').innerHTML = all.map(x => `<circle cx="${100 * Math.cos(x)}" cy="${-100 * Math.sin(x)}" r="6" fill="#FF8D47" stroke="#050914" stroke-width="1.5" />`).join('');
+      } catch (e) { out.textContent = e; }
+    }
+    function gen(src, m) {
+      const s = norm(src), [l, r] = s.split('='), e = `(${l})-(${r})`, K = m ? 180 : P, out = $('#so'), lo = calc($('#s0').value, m), hi = calc($('#s1').value, m);
+      const F = x => { try { const v = calc(e, m, { x }); return isFinite(v) ? v : NaN; } catch (_) { return NaN; } };
+      const find = (a, b) => {
+        const N = Math.min(14000, Math.max(1500, Math.ceil((b - a) / K * 1500))), h = (b - a) / N, xs = [], ys = [], R = [], add = x => { if (R.every(y => Math.abs(y - x) > 1e-6 * K)) R.push(x); };
+        for (let i = 0; i <= N; i++) { xs.push(a + i * h); ys.push(F(a + i * h)); }
+        for (let i = 0; i <= N; i++) {
+          const u = ys[i], v = i < N ? ys[i + 1] : NaN;
+          if (isFinite(u) && isFinite(v) && u * v < 0) {
+            let p = xs[i], q = xs[i + 1];
+            for (let j = 0; j < 60; j++) { const c = (p + q) / 2, fc = F(c); if (isNaN(fc)) break; if (fc * F(p) <= 0) q = c; else p = c; }
+            const x = (p + q) / 2; if (Math.abs(F(x)) < 1e-6) add(x);
+          }
+        }
+        return R.sort((x, y) => x - y);
+      };
+      const D = x => m ? `${f6(x)}°` : (pf(x) || f6(x)), Rt = find(lo, hi);
+      out.innerHTML = `<ol class="list-decimal list-inside space-y-1 bg-surface-container border border-outline-variant rounded-md p-gutter-md"><li>Zeros of f(x) = ${l} − (${r}).</li><li>Solutions in [${D(lo)}, ${D(hi)}]: <b class="text-secondary font-mono">${Rt.length ? Rt.slice(0, 60).map(D).join(' | ') : 'none'}</b></li></ol>`;
+      $('#sol').innerHTML = Rt.slice(0, 60).map(x => { const a = m ? x * P / 180 : x; return `<circle cx="${100 * Math.cos(a)}" cy="${-100 * Math.sin(a)}" r="6" fill="#FF8D47" />`; }).join('');
+    }
+    $('#sg').onclick = solve; solve();
+
+    // ---------- calculator ----------
+    let cdeg = true, hist = [], lastR = '';
+    $('#cbs').innerHTML = 'sin cos tan asin acos atan csc sec cot π e √ ^ ( ) 7 8 9 ÷ 4 5 6 × 1 2 3 − 0 . ⌫ + C ='.split(' ').map(b => `<button type="button" class="px-2 py-2 rounded font-mono text-mono-md border border-outline-variant ${b == '=' ? 'bg-secondary text-on-secondary font-bold' : 'bg-surface-container-high text-on-surface hover:border-primary'}">${b}</button>`).join('');
+    const ci = $('#ci');
+    function ev() {
+      try {
+        let v = calc(ci.value, cdeg); v = Math.abs(v) < 1e-12 ? 0 : +v.toPrecision(12);
+        if (!isFinite(v)) throw 'Undefined';
+        const e = exOf(v); lastR = String(v); $('#co').textContent = `= ${v}` + (e ? `  =  ${e}` : '');
+        hist.unshift(ci.value + ' = ' + v); hist = hist.slice(0, 8);
+        $('#ch').innerHTML = hist.map(x => `<div class="text-on-surface-variant cursor-pointer hover:text-primary" data-x="${x.split(' = ')[0]}">${x}</div>`).join('');
+      } catch (e) { $('#co').textContent = '⚠ ' + e; }
+    }
+    $('#cbs').onclick = e => {
+      const b = e.target.textContent; if (e.target.tagName != 'BUTTON') return;
+      if (b == '=') ev(); else if (b == 'C') { ci.value = ''; $('#co').textContent = ''; } else if (b == '⌫') ci.value = ci.value.slice(0, -1); else ci.value += (b.length > 1 && /[a-z]/.test(b) ? b + '(' : b);
+    };
+    ci.onkeydown = e => { if (e.key == 'Enter') ev(); };
+    $('#ch').onclick = e => { if (e.target.dataset.x) { ci.value = e.target.dataset.x; ev(); } };
+    $('#cm').onclick = e => { cdeg = !cdeg; e.target.textContent = cdeg ? 'DEG' : 'RAD'; };
+    $('#cc2').onclick = () => { try { navigator.clipboard.writeText(lastR); } catch (e) { } };
+
+    // ---------- practice ----------
+    const rnd = n => Math.floor(Math.random() * n), pick = a => a[rnd(a.length)], sh = a => a.map(v => [Math.random(), v]).sort((x, y) => x[0] - y[0]).map(v => v[1]), neg = x => x === '0' ? '0' : x[0] == '−' ? x.slice(1) : '−' + x;
+    const mk = (q, a, w, e) => { const o = sh([a, ...sh([...new Set(w)].filter(v => v !== a)).slice(0, 3)]); return { q, o, a: o.indexOf(a), e }; };
+    const SP = [30, 45, 60, 120, 135, 150, 210, 225, 240, 300, 315, 330], VAL = ['0', '1', '−1', '1/2', '−1/2', '√2/2', '−√2/2', '√3/2', '−√3/2'], TR = [[3, 4, 5], [5, 12, 13], [8, 15, 17], [7, 24, 25]], QN = ['I', 'II', 'III', 'IV'];
+    const G = [
+      [
+        () => { const d = pick(SP), f = pick(['sin', 'cos']), a = ex(d, f), Q = Math.floor(d / 90), r = ref(d); return mk(`What is the exact value of ${f} ${d}°?`, a, VAL, `${d}° is in quadrant ${QN[Q]} with reference angle ${r}°. ${f} ${r}° = ${ex(r, f)}, so ${f} ${d}° = ${a}.`); },
+        () => { const L = [30, 45, 60, 90, 120, 135, 150, 180, 210, 240, 270, 300, 315, 330], d = pick(L), a = pf(d * P / 180); return mk(`Convert ${d}° to radians.`, a, L.map(x => pf(x * P / 180)), `Multiply by π/180: ${d}·π/180 = ${a}.`); },
+        () => { const s = pick([[1, 1], [1, -1], [-1, 1], [-1, -1]]), Q = (s[0] > 0 ? (s[1] > 0 ? 0 : 3) : (s[1] > 0 ? 1 : 2)); return mk(`In which quadrant is sin θ ${s[1] > 0 ? '> 0' : '< 0'} and cos θ ${s[0] > 0 ? '> 0' : '< 0'}?`, QN[Q], QN, 'sin is y (positive in I, II); cos is x (positive in I, IV).'); }
+      ],
+      [
+        () => { const d = pick(SP.concat([90, 180, 270])), c = ex(d, 'cos'), s = ex(d, 'sin'); return mk(`Which point on the unit circle corresponds to ${d}°?`, `(${c}, ${s})`, [`(${s}, ${c})`, `(${neg(c)}, ${s})`, `(${c}, ${neg(s)})`, `(${neg(c)}, ${neg(s)})`], `The point is (cos θ, sin θ) = (${c}, ${s}).`); },
+        () => { const L = [30, 45, 60, 120, 135, 150, 210, 225, 240, 300, 315, 330], d = pick(L); return mk(`Convert ${pf(d * P / 180)} radians to degrees.`, d + '°', L.map(x => x + '°'), `Multiply by 180/π: ${pf(d * P / 180)}·180/π = ${d}°.`); },
+        () => { const [a, b, c] = pick(TR); return mk(`In a right triangle opposite = ${a} and hypotenuse = ${c}. What is cos A?`, `${b}/${c}`, [`${a}/${c}`, `${a}/${b}`, `${c}/${b}`], `Adjacent = √(${c}²−${a}²) = ${b}. cos A = ${b}/${c}.`); }
+      ],
+      [
+        () => { const [a, b, c] = pick(TR); return mk(`sin θ = ${a}/${c} and θ is in quadrant II. Find cos θ.`, `−${b}/${c}`, [`${b}/${c}`, `−${a}/${c}`, `−${a}/${b}`], `In quadrant II, x < 0, so cos θ = −${b}/${c}.`); },
+        () => { const [a, b, c] = pick(TR), n = c * c - 2 * a * a; return mk(`If sin θ = ${a}/${c}, what is cos 2θ?`, `${n}/${c * c}`, [`${2 * a * a - c * c}/${c * c}`, `${2 * a * b}/${c * c}`, `${c * c - a * a}/${c * c}`], `cos 2θ = 1 − 2sin²θ = ${n}/${c * c}.`); },
+        () => { const B = pick([2, 3, 4]), A = pick([2, 3, 5]); return mk(`What is the period of y = ${A} sin(${B}x)?`, pf(2 * P / B), [2, 3, 4, 1].map(b => pf(2 * P / b)), `Period = 2π/B = 2π/${B} = ${pf(2 * P / B)}.`); }
+      ]
+    ];
+    let cur, miss = [], sc = [0, 0], ans = false;
+    function nq(re) {
+      cur = re && miss.length ? miss.shift() : pick(G[+$('#pv').value])();
+      ans = false; $('#pq').textContent = cur.q;
+      $('#po').innerHTML = cur.o.map((o, i) => `<button type="button" data-i="${i}" class="px-4 py-2.5 rounded bg-surface-container border border-outline-variant text-left font-mono text-mono-md text-on-surface hover:border-primary transition-colors duration-state-change">${o}</button>`).join('');
+      $('#pf').innerHTML = ''; $('#pscore').textContent = `Score ${sc[0]}/${sc[1]} · missed: ${miss.length}`;
+    }
+    $('#po').onclick = e => {
+      const i = e.target.dataset.i; if (i === undefined || ans) return;
+      ans = true; const ok = +i == cur.a; sc[1]++; if (ok) sc[0]++; else miss.push(cur);
+      const bs = $('#po').children;
+      bs[cur.a].classList.add('bg-success', 'text-on-success', 'border-success');
+      if (!ok) bs[i].classList.add('bg-error', 'text-on-error', 'border-error');
+      $('#pf').innerHTML = (ok ? '<b class="text-success">Correct.</b> ' : '<b class="text-error">Not quite.</b> ') + cur.e;
+      $('#pscore').textContent = `Score ${sc[0]}/${sc[1]} · missed: ${miss.length}`;
+    };
+    $('#pn').onclick = () => nq(); $('#pr').onclick = () => nq(1); $('#pv').onchange = () => nq(); nq();
+
+    // ---------- tabs, workspace navigation & intro splash ----------
+    const GR = { circle: 'learn', special: 'learn', conv: 'learn', solver: 'learn', graphs: 'explore', tri: 'explore', ids: 'tools', calc: 'tools', practice: 'practice' };
+    const WS_ORDER = ['learn', 'explore', 'tools', 'practice'];
+    const WS_META = {
+      learn: {
+        title: 'Learn',
+        desc: 'Unit circle, special angles, unit converter, and equation solver',
+        items: [['circle', 'Unit Circle'], ['special', 'Special Angles'], ['conv', 'Converter'], ['solver', 'Equation Solver']]
+      },
+      explore: {
+        title: 'Explore',
+        desc: 'Interactive wave graph laboratory and right-triangle solver',
+        items: [['graphs', 'Graph Lab'], ['tri', 'Right Triangle']]
+      },
+      tools: {
+        title: 'Tools',
+        desc: 'Trigonometric identities reference and scientific calculator',
+        items: [['ids', 'Identities'], ['calc', 'Calculator']]
+      },
+      practice: {
+        title: 'Practice',
+        desc: 'Adaptive trigonometry quiz arena with missed-question retry',
+        items: [['practice', 'Quiz Arena']]
+      }
+    };
+    let activeWorkspace = 'learn';
+
+    function showG(g, animate = false) {
+      if (!WS_META[g]) g = 'learn';
+      activeWorkspace = g;
+      for (const id in GR) {
+        const el = $('#' + id);
+        const visible = GR[id] == g;
+        el.hidden = !visible;
+        el.classList.toggle('hidden', !visible);
+        if (visible) {
+          el.classList.add('is-visible');
+          if (animate) {
+            el.classList.remove('animate-panel');
+            void el.offsetWidth;
+            el.classList.add('animate-panel');
+          }
+        }
+      }
+      document.querySelectorAll('.tb').forEach(b => {
+        const active = b.dataset.g == g;
+        b.setAttribute('aria-selected', active);
+        b.classList.toggle('bg-primary', active);
+        b.classList.toggle('text-on-primary', active);
+        b.classList.toggle('text-on-surface-variant', !active);
+      });
+
+      const meta = WS_META[g];
+      $('#ws-badge').textContent = meta.title;
+      $('#ws-desc').textContent = meta.desc;
+      $('#ws-jumps').innerHTML = meta.items.map(([id, label]) =>
+        `<button type="button" data-jump="${id}" class="px-2.5 py-1 rounded bg-surface-container border border-outline-variant font-label text-label-sm text-on-surface-variant hover:text-primary hover:border-primary transition-colors duration-state-change">${label}</button>`
+      ).join('');
+
+      const idx = WS_ORDER.indexOf(g);
+      const prev = WS_ORDER[idx - 1], next = WS_ORDER[idx + 1];
+      const prevBtn = $('#ws-prev'), nextBtn = $('#ws-next');
+      if (prev) {
+        prevBtn.hidden = false;
+        prevBtn.dataset.target = prev;
+        $('#ws-prev-label').textContent = WS_META[prev].title;
+      } else {
+        prevBtn.hidden = true;
+      }
+      if (next) {
+        nextBtn.hidden = false;
+        nextBtn.dataset.target = next;
+        $('#ws-next-label').textContent = WS_META[next].title;
+      } else {
+        nextBtn.hidden = true;
+      }
+
+      if (location.hash !== '#' + g) {
+        try { history.replaceState(null, '', '#' + g); } catch (_) { }
+      }
+      scrollTo(0, 0);
+      gdraw();
+    }
+
+    document.querySelector('nav').onclick = e => {
+      const btn = e.target.closest('.tb');
+      if (btn) showG(btn.dataset.g, true);
+    };
+    $('#ws-jumps').onclick = e => {
+      const btn = e.target.closest('[data-jump]');
+      if (!btn) return;
+      const target = $('#' + btn.dataset.jump);
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+    $('#ws-prev').onclick = () => { if ($('#ws-prev').dataset.target) showG($('#ws-prev').dataset.target, true); };
+    $('#ws-next').onclick = () => { if ($('#ws-next').dataset.target) showG($('#ws-next').dataset.target, true); };
+
+    const initialTab = location.hash.replace('#', '');
+    showG(WS_META[initialTab] ? initialTab : 'learn', false);
+    upd();
+    go('loop');
+
+    // ---------- Intro Splash ----------
+    (function initIntroSplash() {
+      const splash = $('#intro-splash');
+      if (!splash) return;
+      let done = false;
+      const dismiss = (immediate = false) => {
+        if (done) return;
+        done = true;
+        if (immediate) {
+          splash.hidden = true;
+          return;
+        }
+        splash.classList.add('is-leaving');
+        setTimeout(() => { splash.hidden = true; }, 540);
+      };
+      $('#skip-intro').onclick = () => dismiss(false);
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        dismiss(true);
+      } else {
+        setTimeout(() => dismiss(false), 2100);
+      }
+    })();
+
+    // ---------- Init ----------
+    setAngle(45);
+    initPractice();
+  </script>
+
+
+</body></html>
